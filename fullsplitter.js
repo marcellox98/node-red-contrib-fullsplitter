@@ -32,7 +32,7 @@ module.exports = function(RED) {
     function SplitterNode(n) {
         RED.nodes.createNode(this, n);
         this.property = n.property;
-        console.log(n.property)
+        // console.log(n.property)
         var propertyParts = n.property.split("."),
             node = this;
 
@@ -52,20 +52,23 @@ module.exports = function(RED) {
               var last = 0;
               var topic = msg.topic;
               msg.splitStatus = "start"
+              msg.count = {total: nb - 1}
               node.send([null, msg])
               node.status({ fill: "yellow", text: "streaming", shape: "ring" })
-
+              
+              delete msg.splitStatus;
               for( var i in prop ){
 /*	
                 var m = RED.util.cloneMessage(msg);
                 m.payload = prop[i];
                 m.topic = topic;
 */				
-				msg.splitStatus = "interating"
-				var path = n.property
+				
+				// var path = n.property
 				var customMsg = msg
-				console.log(recompose(customMsg,path))
-				customMsg.array = recompose(customMsg,path)[i]
+				customMsg.count.current = i
+				// console.log(recompose(customMsg,path))
+				customMsg.array = prop[i]
                 node.send( customMsg );
 
                 cur++;
@@ -88,13 +91,4 @@ module.exports = function(RED) {
 }
 
 
-function recompose(obj,string){
-    var parts = string.split('.');
-    var newObj = obj[parts[0]];
-    if(parts[1]){
-        parts.splice(0,1);
-        var newString = parts.join('.');
-        return recompose(newObj,newString);
-    }
-    return newObj;
-}
+

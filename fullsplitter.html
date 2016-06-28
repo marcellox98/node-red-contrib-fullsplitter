@@ -1,3 +1,4 @@
+@@ -0,0 +1,68 @@
 <!--
  * Copyright 2014 Leon van Kammen / Coder of salvation. All rights reserved.
  * 
@@ -40,11 +41,15 @@
     <p style="color: red">This project is based on Jacques44's node-red-contrib-bigsplitter</p> <br> <br>
    <p>the difference between mine and Jacques44's splitter is that mine splitter stores the data in msg.array and send the msg object so you can youse it easely in functions and Jacques44's doesn't send the full msg in the begining and ending.</p>
   <h2><b>UITPUT</b></h2> 
+
+
   <b>First output</b> <br>
-  the splitted items <b>stored in <i>msg.array</i></b> <br> example: if the array = <br> ['apple', 'strawberry', 'peach' ], the outputs will be : <br>
+  the splitted items stored in <b><i>msg.array</i></b> <br> example: if the array = <br> ['apple', 'strawberry', 'peach' ], the outputs will be : <br>
   msg.array = 'apple' <br>
   msg.array = 'strawberry' <br>
-  msg.array = 'peach' <br> <br>
+  msg.array = 'peach' <br> 
+  the current position wil be stored in <b> <i> msg.count</i></b>
+  <br> <br>
    <b>Second output</b>
   <br>
   this output is yoused to mark the start and finish. this data is stored in <b><i>msg.splitStatus</i></b>
@@ -62,7 +67,7 @@
         outputs: 2,
         icon: "input-split.png",
         label: function() {
-            return this.name||"split: "+defaults.property.value;
+            return this.name||"split: "+this.property;
         }
     });
 </script>
